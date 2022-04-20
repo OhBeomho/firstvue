@@ -1,8 +1,9 @@
 <template>
-  <div class="black-bg">
+  <div class="black-bg" v-if="dialogVisible == true">
     <div class="white-bg">
-      <h4>상세페이지</h4>
-      <p>상세페이지 내용</p>
+      <h4 ref="dialogTitle">상세페이지</h4>
+      <p ref="dialogContent">상세페이지 내용</p>
+      <button @click="setDialogState(false)">닫기</button>
     </div>
   </div>
 
@@ -16,17 +17,18 @@
   <div class="games">
     <div v-for="(game, i) in games" :key="i" class="game">
       <img :src="game.image" alt="Image">
-      <h3>{{ game.name }}</h3>
-      <p>Price: &#8361; {{ game.price }}</p>
+      <h3 @click="setDialogState(game.name, '', true)">{{ game.name }}</h3>
+      <p>가격: &#8361; {{ game.price }}</p>
       <button @click="report(i)">허위게임신고</button> <span>신고수: {{ game.report }}</span>
     </div>
   </div>
 </template>
 
 <script>
-function GameObject(name, price) {
+function GameObject(name, price, desc) {
   this.name = name;
   this.price = price;
+  this.desc = desc;
   this.report = 0;
   this.image = require(`./assets/${name}.png`);
 }
@@ -36,16 +38,22 @@ export default {
   data() {
     return {
       games: [
-        new GameObject("Roblox", "free"),
-        new GameObject("Geometry Dash", "4400"),
-        new GameObject("Minecraft", "30000")
+        new GameObject("Roblox", "free", ""),
+        new GameObject("Geometry Dash", "4400", ""),
+        new GameObject("Minecraft", "30000", "")
       ],
-      menus: [ "Home", "Shop", "About" ]
+      menus: [ "Home", "Shop", "About" ],
+      dialogVisible: false
     };
   },
   methods: {
     report(index) {
       this.games[index].report++;
+    },
+    setDialogState(title = "", content = "", visible) {
+      this.$refs.dialogTitle.innerText = title;
+      this.$refs.dialogContent.innerText = content;
+      this.dialogVisible = visible;
     }
   },
   components: {
@@ -123,7 +131,7 @@ div {
   border-radius: 10px;
 }
 
-.game button {
+button {
   background: darkslateblue;
   border: 0;
   border-radius: 5px;
@@ -131,11 +139,11 @@ div {
   color: white;
 }
 
-.game button:hover {
+button:hover {
   background: rgb(96, 81, 192);
 }
 
-.game button:active {
+button:active {
   background: rgb(43, 31, 125);
 }
 </style>
