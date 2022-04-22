@@ -1,8 +1,8 @@
 <template>
   <div class="black-bg" v-if="dialog.visible == true">
     <div class="white-bg">
-      <h4>{{ dialog.title }}</h4>
-      <p>{{ dialog.content }}</p>
+      <h3>{{ dialog.title }}</h3>
+      <p>{{ dialog.content }}</p><br/>
       <button @click="dialog.visible = false">닫기</button>
     </div>
   </div>
@@ -16,8 +16,8 @@
   </div>
   <div class="games">
     <div v-for="(game, i) in games" :key="i" class="game">
-      <img :src="game.image" alt="Image">
-      <h3 @click="setDialogState(game.name, game.content, true)">{{ game.name }}</h3>
+      <img class="seeContent" @click="setDialogState(game.name, game.content, true)" :src="game.image" alt="Image">
+      <h3 class="seeContent" @click="setDialogState(game.name, game.content, true)">{{ game.name }}</h3>
       <p>가격: &#8361; {{ game.price }}</p>
       <button @click="report(i)">허위게임신고</button> <span>신고수: {{ game.report }}</span>
     </div>
@@ -92,7 +92,7 @@ div {
 .menu {
   background: darkslateblue;
   padding: 15px;
-  border-radius: 5px;
+  border-radius: 0px 0px 50% 50%;
 }
 
 .menu a {
@@ -141,5 +141,9 @@ button:hover {
 
 button:active {
   background: rgb(43, 31, 125);
+}
+
+.seeContent:hover {
+  cursor: pointer;
 }
 </style>
