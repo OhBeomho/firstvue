@@ -19,7 +19,6 @@
       <img class="seeContent" @click="setDialogState(game.name, game.content, true)" :src="game.image" alt="Image">
       <h3 class="seeContent" @click="setDialogState(game.name, game.content, true)">{{ game.name }}</h3>
       <p>가격: &#8361; {{ game.price }}</p>
-      <button @click="report(i)">허위게임신고</button> <span>신고수: {{ game.report }}</span>
     </div>
   </div>
 </template>
@@ -43,9 +42,6 @@ export default {
     };
   },
   methods: {
-    report: function(index) {
-      this.games[index].report++;
-    },
     setDialogState: function(title, content, visible) {
       this.dialog.title = title;
       this.dialog.content = content;
